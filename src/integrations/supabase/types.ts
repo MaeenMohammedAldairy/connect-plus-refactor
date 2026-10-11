@@ -75,6 +75,47 @@ export type Database = {
           },
         ]
       }
+      client_notifications: {
+        Row: {
+          body: string | null
+          client_id: string
+          created_at: string
+          id: string
+          kind: string
+          platform: Database["public"]["Enums"]["platform_name"]
+          read_at: string | null
+          title: string
+        }
+        Insert: {
+          body?: string | null
+          client_id: string
+          created_at?: string
+          id?: string
+          kind: string
+          platform: Database["public"]["Enums"]["platform_name"]
+          read_at?: string | null
+          title: string
+        }
+        Update: {
+          body?: string | null
+          client_id?: string
+          created_at?: string
+          id?: string
+          kind?: string
+          platform?: Database["public"]["Enums"]["platform_name"]
+          read_at?: string | null
+          title?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "client_notifications_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
       clients: {
         Row: {
           country: string
@@ -303,7 +344,10 @@ export type Database = {
       }
       conversations: {
         Row: {
+          ai_paused: boolean
+          ai_reply_count: number
           assigned_to: string | null
+          away_sent_at: string | null
           client_id: string
           contact_id: string | null
           created_at: string
@@ -319,7 +363,10 @@ export type Database = {
           updated_at: string
         }
         Insert: {
+          ai_paused?: boolean
+          ai_reply_count?: number
           assigned_to?: string | null
+          away_sent_at?: string | null
           client_id: string
           contact_id?: string | null
           created_at?: string
@@ -335,7 +382,10 @@ export type Database = {
           updated_at?: string
         }
         Update: {
+          ai_paused?: boolean
+          ai_reply_count?: number
           assigned_to?: string | null
+          away_sent_at?: string | null
           client_id?: string
           contact_id?: string | null
           created_at?: string
@@ -1217,6 +1267,101 @@ export type Database = {
             foreignKeyName: "webhook_events_client_id_fkey"
             columns: ["client_id"]
             isOneToOne: false
+            referencedRelation: "clients"
+            referencedColumns: ["id"]
+          },
+        ]
+      }
+      whatsapp_settings: {
+        Row: {
+          ai_enabled: boolean
+          ai_instructions: string
+          ai_language: string
+          ai_reply_mode: string
+          ai_tone: string
+          business_hours: Json
+          client_id: string
+          closing_message: string
+          created_at: string
+          handoff_keywords: string[]
+          handoff_message: string
+          hours_enabled: boolean
+          ignore_groups: boolean
+          max_ai_replies: number
+          notify_disconnect: boolean
+          notify_errors: boolean
+          notify_new_message: boolean
+          outside_hours_message: string
+          read_messages: boolean
+          reject_calls: boolean
+          timezone: string
+          unavailable_message: string
+          updated_at: string
+          updated_by: string | null
+          welcome_enabled: boolean
+          welcome_message: string
+        }
+        Insert: {
+          ai_enabled?: boolean
+          ai_instructions?: string
+          ai_language?: string
+          ai_reply_mode?: string
+          ai_tone?: string
+          business_hours?: Json
+          client_id: string
+          closing_message?: string
+          created_at?: string
+          handoff_keywords?: string[]
+          handoff_message?: string
+          hours_enabled?: boolean
+          ignore_groups?: boolean
+          max_ai_replies?: number
+          notify_disconnect?: boolean
+          notify_errors?: boolean
+          notify_new_message?: boolean
+          outside_hours_message?: string
+          read_messages?: boolean
+          reject_calls?: boolean
+          timezone?: string
+          unavailable_message?: string
+          updated_at?: string
+          updated_by?: string | null
+          welcome_enabled?: boolean
+          welcome_message?: string
+        }
+        Update: {
+          ai_enabled?: boolean
+          ai_instructions?: string
+          ai_language?: string
+          ai_reply_mode?: string
+          ai_tone?: string
+          business_hours?: Json
+          client_id?: string
+          closing_message?: string
+          created_at?: string
+          handoff_keywords?: string[]
+          handoff_message?: string
+          hours_enabled?: boolean
+          ignore_groups?: boolean
+          max_ai_replies?: number
+          notify_disconnect?: boolean
+          notify_errors?: boolean
+          notify_new_message?: boolean
+          outside_hours_message?: string
+          read_messages?: boolean
+          reject_calls?: boolean
+          timezone?: string
+          unavailable_message?: string
+          updated_at?: string
+          updated_by?: string | null
+          welcome_enabled?: boolean
+          welcome_message?: string
+        }
+        Relationships: [
+          {
+            foreignKeyName: "whatsapp_settings_client_id_fkey"
+            columns: ["client_id"]
+            isOneToOne: true
             referencedRelation: "clients"
             referencedColumns: ["id"]
           },
